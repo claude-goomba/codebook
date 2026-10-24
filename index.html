@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f3ec">
+  <title>Codebook | Code, not artificial intelligence.</title>
+  <link rel="stylesheet" href="./style.css">
+  <link rel="icon" type="image/svg+xml" href="./logo.svg">
+</head>
+<body>
+  <aside class="sidebar">
+    <a class="brand" href="./"><img class="book-logo" src="./logo.svg" alt="" width="52" height="42"> codebook<span class="brand-dot">.</span></a>
+    <div class="workspace-label">YOUR WORKSPACE</div>
+    <button class="nav-button active" id="browse"><span aria-hidden="true">▦</span> Snippet library <span id="total" class="count">112</span></button>
+    <button class="nav-button" id="open-add"><span aria-hidden="true">+</span> Add a snippet</button>
+    <button class="nav-button merger-nav" id="open-merger"><span aria-hidden="true">&amp;</span> Merger <span class="count" id="merge-count">0</span></button>
+    <div class="sidebar-section">
+      <div class="workspace-label">LANGUAGES</div>
+      <div id="languages" class="languages" aria-label="Filter by language"></div>
+    </div>
+    <div class="sidebar-bottom"><span class="status-dot"></span> Local. Predictable. Yours.<p>No models. No API keys.<br>Just a good collection of code.</p><span class="version">CODEBOOK / V1.1 / MERGER</span></div>
+  </aside>
+
+  <main>
+    <header class="topbar"><span>Workspace <span class="slash">/</span> <strong>Snippet library</strong></span><span class="local-badge"><span class="status-dot"></span> NO AI. EVER.</span></header>
+    <section class="intro">
+      <div class="eyebrow">A SMALLER, SIMPLER CODING ASSISTANT</div>
+      <h1>Good code.<br><span>No guesswork.</span></h1>
+      <p>Describe what you need. Find a real, saved snippet.<br>Select snippets and bring them together with Merger.</p>
+      <form id="search-form" class="search-box" role="search">
+        <label for="query" class="sr-only">Describe the code you need</label>
+        <span class="search-icon" aria-hidden="true">⌕</span>
+        <input id="query" type="search" placeholder="How do I fetch data from an API?" autocomplete="off">
+        <button type="submit">Find code <span aria-hidden="true">↗</span></button>
+      </form>
+      <div class="suggestions"><span>TRY A PROMPT</span><button data-query="fetch data from an API">Fetch an API</button><button data-query="center a div">Center a div</button><button data-query="read json file" data-language="Python">Read a JSON file</button></div>
+    </section>
+
+    <section class="library" aria-labelledby="results-heading">
+      <div class="library-heading"><div><h2 id="results-heading">The snippet library <span id="result-count">112</span></h2><p id="result-description">A few useful building blocks. Ready when you are.</p></div><span class="library-caption">SAVED CODE, NOT GENERATED CODE</span></div>
+      <div id="results" class="results"></div>
+      <div id="empty" class="empty" hidden><span class="empty-symbol">{ ? }</span><h3>No saved match. No made-up answer.</h3><p>Try fewer keywords or another language, or add the snippet yourself.</p><button id="empty-add" class="primary">Add a snippet</button></div>
+    </section>
+    <footer><span>A little database. A lot less magic.</span><span>Your custom snippets stay in this browser.</span></footer>
+  </main>
+
+  <dialog id="merger-dialog" aria-labelledby="merger-title">
+    <div class="dialog-top"><span class="eyebrow">CODEBOOK / UPDATE 1.1</span><button type="button" id="close-merger" aria-label="Close Merger">Close</button></div>
+    <h2 id="merger-title">Merger<span class="merger-dot">.</span></h2>
+    <p class="merge-intro">Your snippets. In your order. One new starting point.</p>
+    <p id="merge-help">Select at least two snippets of the same language using their Merge buttons in the library. Originals stay unchanged.</p>
+    <ol id="merge-list" aria-label="Snippets in merge order"></ol>
+    <p id="merge-empty">Nothing selected yet. Close Merger and choose snippets from the library.</p>
+    <div class="merge-toolbar"><button type="button" id="generate-merge" class="primary">Combine snippets</button><button type="button" id="clear-merge" class="copy-button">Clear selection</button></div>
+    <p class="merge-warning">Merger joins code as text, not as a working program. Review duplicate names, imports, dependencies, and execution order. Code is never run here. Recombining replaces your edits after confirmation.</p>
+    <label class="merge-editor-label" for="merge-output">Combined code <span id="merge-language"></span></label>
+    <textarea id="merge-output" rows="14" spellcheck="false" placeholder="Combine your selected snippets, then edit the result here." disabled></textarea>
+    <p id="merge-error" class="form-error" role="alert"></p>
+    <div class="merge-toolbar"><button type="button" id="save-merge" class="primary" disabled>Save as a new snippet</button><button type="button" id="copy-merge" class="copy-button" disabled>Copy merged code</button></div>
+    <p class="merge-session-note">Selection and unsaved edits last only until you reload this page.</p>
+  </dialog>
+
+  <dialog id="snippet-dialog" aria-labelledby="dialog-title">
+    <div class="dialog-top"><span class="eyebrow">GROW YOUR LIBRARY</span><button type="button" id="close-dialog" aria-label="Close dialog">✕</button></div>
+    <h2 id="dialog-title">Teach it a new trick.</h2><p>Save the prompts you might ask and the exact code to return.</p>
+    <form id="add-form">
+      <label>Snippet title<input name="title" required maxlength="100" placeholder="e.g. Format a date"></label>
+      <label>Language<select name="language"><option>JavaScript</option><option>Python</option><option>HTML</option><option>CSS</option><option>SQL</option></select></label>
+      <label>Description<input name="description" required maxlength="240" placeholder="What does this snippet do?"></label>
+      <label>Matching prompts <span>(one per line)</span><textarea name="prompts" required rows="3" maxlength="2000" placeholder="format a date&#10;convert date to a readable string"></textarea></label>
+      <label>Code<textarea name="code" class="code-input" required rows="8" maxlength="30000" spellcheck="false" placeholder="Paste your code here..."></textarea></label>
+      <label>Usage notes <span>(optional)</span><input name="note" maxlength="1000" placeholder="Dependencies, limitations, or things to change"></label>
+      <p class="form-error" id="form-error" role="alert"></p>
+      <button type="submit" class="primary">Save to my library <span aria-hidden="true">+</span></button>
+    </form>
+  </dialog>
+  <div id="toast" role="status" class="toast" hidden></div>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

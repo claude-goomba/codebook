@@ -1,0 +1,15 @@
+{
+  "name": "@claude-goomba/codebook",
+  "version": "1.1.0",
+  "private": true,
+  "description": "A local snippet library with 112 examples and the Merger workspace.",
+  "type": "module",
+  "engines": { "node": "^20.19.0 || >=22.12.0" },
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "vite build --base=./",
+    "preview": "vite preview --host 127.0.0.1",
+    "test": "node --test database.test.mjs merger.test.mjs"
+  },
+  "devDependencies": { "vite": "^7.3.6" }
+}
